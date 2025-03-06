@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title> Task Management - {% block title %}{% endblock title %} </title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/bundles/datatables/datatables.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-social/bootstrap-social.css' %}  ">
+  <link rel="stylesheet" href="{% static 'assets/bundles/prism/prism.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/summernote/summernote-bs4.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-social/bootstrap-social.css' %}">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/components.css' %}">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+  <link rel='shortcut icon' type='image/x-icon' href="{% static 'assets/img/favicon.ico' %}" />
+
+
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-daterangepicker/daterangepicker.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/select2/dist/css/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/jquery-selectric/selectric.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css' %}">
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar sticky">
+        <div class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
+									collapse-btn"> <i data-feather="align-justify"></i></a></li>
+            {% comment %} <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
+                <i data-feather="maximize"></i>
+              </a></li> {% endcomment %}
+          </ul>
+        </div>
+        <ul class="navbar-nav navbar-right">
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+              class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
+              <span class="badge headerBadge1">
+                6 </span> </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">
+                Messages
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-message">
+                <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
+											text-white"> <img alt="image" src="{% static 'assets/img/users/user-1.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">John
+                      Deo</span>
+                    <span class="time messege-text">Please check your mail !!</span>
+                    <span class="time">2 Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'assets/img/users/user-2.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
+                      Smith</span> <span class="time messege-text">Request for leave
+                      application</span>
+                    <span class="time">5 Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'assets/img/users/user-5.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Jacob
+                      Ryan</span> <span class="time messege-text">Your payment invoice is
+                      generated.</span> <span class="time">12 Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'assets/img/users/user-4.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Lina
+                      Smith</span> <span class="time messege-text">hii John, I have upload
+                      doc
+                      related to task.</span> <span class="time">30
+                      Min Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'assets/img/users/user-3.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Jalpa
+                      Joshi</span> <span class="time messege-text">Please do as specify.
+                      Let me
+                      know if you have any query.</span> <span class="time">1
+                      Days Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
+                    <img alt="image" src="{% static 'assets/img/users/user-2.png' %}" class="rounded-circle">
+                  </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
+                      Smith</span> <span class="time messege-text">Client Requirements</span>
+                    <span class="time">2 Days Ago</span>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+              class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+            </a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+              <div class="dropdown-header">
+                Notifications
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-icons">
+                <a href="#" class="dropdown-item dropdown-item-unread"> <span
+                    class="dropdown-item-icon bg-primary text-white"> <i class="fas
+												fa-code"></i>
+                  </span> <span class="dropdown-item-desc"> Template update is
+                    available now! <span class="time">2 Min
+                      Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="far
+												fa-user"></i>
+                  </span> <span class="dropdown-item-desc"> <b>You</b> and <b>Dedik
+                      Sugiharto</b> are now friends <span class="time">10 Hours
+                      Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-success text-white"> <i
+                      class="fas
+												fa-check"></i>
+                  </span> <span class="dropdown-item-desc"> <b>Kusnaedi</b> has
+                    moved task <b>Fix bug header</b> to <b>Done</b> <span class="time">12
+                      Hours
+                      Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-danger text-white"> <i
+                      class="fas fa-exclamation-triangle"></i>
+                  </span> <span class="dropdown-item-desc"> Low disk space. Let's
+                    clean it! <span class="time">17 Hours Ago</span>
+                  </span>
+                </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-icon bg-info text-white"> <i class="fas
+												fa-bell"></i>
+                  </span> <span class="dropdown-item-desc"> Welcome to Otika
+                    template! <span class="time">Yesterday</span>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
+          <li class="dropdown"><a href="#" data-toggle="dropdown"
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{user.image.url}}"
+                class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+            <div class="dropdown-menu dropdown-menu-right pullDown">
+              <div class="dropdown-title">Hello {{user.first_name}} {{user.last_name}}</div>
+              <a href="{% url "profile" %}" class="dropdown-item has-icon"> <i class="far
+										fa-user"></i> Profile
+              </a> 
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'logout_user'%}" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="main-sidebar sidebar-style-2">
+      {% if user.is_superuser == 1 %}
+      <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+          <a href="{% url 'home' %}"> <img alt="image" src="{% static 'assets/img/logo.png' %}" class="header-logo" /> <span
+              class="logo-name">CRM</span>
+          </a>
+        </div>
+        <ul class="sidebar-menu">
+          <li class="menu-header">Main</li>
+          <li class="dropdown {% block dashboard %} {% endblock dashboard %}">
+            <a href="{% url 'home' %}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+          </li>
+          <li class="dropdown {% block users %} {% endblock users %}">
+            <a href="{% url 'users' %}" class="nav-link"><i data-feather="users"></i><span>User Management</span></a>
+          </li>
+          <li class="dropdown {% block appsetting %} {% endblock appsetting %}">
+            <a href="{% url 'appsetting' %}" class="nav-link"><i data-feather="settings"></i><span>App-Settings</span></a>
+          </li>           
+        </ul>
+      </aside>      
+      {% else %}
+      <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+          <a href="{% url 'home' %}"> <img alt="image" src="{% static 'assets/img/logo.png' %}" class="header-logo" /> <span
+              class="logo-name">CRM</span>
+          </a>
+        </div>
+        <ul class="sidebar-menu">
+          <li class="menu-header">Main</li>
+          <li class="dropdown {% block c6 %} {% endblock c6 %}">
+            <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+          </li>
+          <li class="dropdown {% block c7 %} {% endblock c7 %} ">
+            <a href="index.html" class="nav-link"><i data-feather="settings"></i><span>App-Settings</span></a>
+          </li>           
+        </ul>
+      </aside>
+      {% endif %}
+      </div>
+      <!-- Main Content -->
+      <div class="main-content">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible show fade">
+          <div class="alert-body">
+            <button class="close" data-dismiss="alert">
+              <span>&times;</span>
+            </button>
+            {{message}}
+          </div>
+        </div>
+        {% endfor %}  
+        {% endif %}  
+     {% block content %}
+     
+     {% endblock content %}
+     
+      </div>
+      
+      <footer class="main-footer">
+        <div class="footer-left">
+          <a href="#">Powered By<strong> TechAikiDo</strong></a>
+        </div>
+        <div class="footer-right">
+          <a href="#">CopyRights <strong> &copy; </strong>2023</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="{% static 'assets/js/app.min.js' %}"></script>
+  <!-- JS Libraies -->
+  <script src="{% static 'assets/bundles/apexcharts/apexcharts.min.js' %}"></script>
+  <!-- Page Specific JS File -->
+  <script src="{% static 'assets/js/page/index.js' %}"></script>
+  <!-- Template JS File -->
+  <script src="{% static 'assets/js/scripts.js' %}"></script>
+  <!-- Custom JS File -->
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+
+  <script src="{% static 'assets/bundles/datatables/datatables.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/jquery-ui/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'assets/js/page/datatables.js' %}"></script>
+
+  <script src="{% static 'assets/bundles/prism/prism.js' %}"></script>
+
+
+<script src="{% static 'assets/bundles/cleave-js/dist/cleave.min.js' %}"></script>
+<script src="{% static 'assets/bundles/cleave-js/dist/addons/cleave-phone.us.js' %}"></script>
+<script src="{% static 'assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js' %}"></script>
+<script src="{% static 'assets/bundles/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'assets/bundles/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js' %}"></script>
+<script src="{% static 'assets/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js' %}"></script>
+<script src="{% static 'assets/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/bundles/select2/dist/js/select2.full.min.js' %}"></script>
+<script src="{% static 'assets/bundles/jquery-selectric/jquery.selectric.min.js' %}"></script>
+<script src="{% static 'assets/bundles/summernote/summernote-bs4.js' %}"></script>
+<!-- Page Specific JS File -->
+<script src="{% static 'assets/js/page/forms-advanced-forms.js' %}"></script>
+<script src="{% static 'assets/js/page/auth-register.js' %}"></script>
+
+{% block scripts %}
+
+{% endblock scripts %}
+</body>
+
+</html>

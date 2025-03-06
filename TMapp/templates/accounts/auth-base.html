@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- auth-login.html  21 Nov 2019 03:49:32 GMT -->
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title> Task Management  - {% block title %} {% endblock title %}  </title>
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/app.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/bundles/bootstrap-social/bootstrap-social.css' %}  ">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}  ">
+  <link rel="stylesheet" href="{% static 'assets/css/components.css' %} ">
+  <!-- Custom style CSS -->
+  <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}  ">
+  <link rel='shortcut icon' type='image/x-icon' href="{% static 'assets/img/favicon.ico' %}" />
+</head>
+
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    {% block section %}
+    
+    {% endblock section %}
+  </div>
+  <!-- General JS Scripts -->
+  <script src="{% static 'assets/js/app.min.js' %}"></script>
+  <!-- JS Libraies -->
+  <script src="{% static 'assets/bundles/jquery-pwstrength/jquery.pwstrength.min.js' %}"></script>
+  <script src="{% static 'assets/bundles/jquery-selectric/jquery.selectric.min.js' %}"></script>
+  <!-- Page Specific JS File -->
+  <script src="{% static 'assets/js/page/auth-register.js' %}"></script>
+  <script src="{% static 'assets/js/scripts.js' %}"></script>
+  <!-- Custom JS File -->
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+</body>
+
+</html>
