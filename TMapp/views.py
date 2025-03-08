@@ -48,7 +48,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, "Successfully logged out.")
-    return redirect("login_user")
+    return render(request, "accounts/auth-login.html")
 
 
 def Register(request):

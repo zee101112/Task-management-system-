@@ -28,9 +28,17 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ["https://task-management-system-pj5s.onrender.com/",
-                        'https://task-management-system-pj5s.onrender.com/auth/']
 
+CSRF_TRUSTED_ORIGINS = ["https://task-management-system-pj5s.onrender.com/"]
+
+
+URLS = "https://task-management-system-pj5s.onrender.com/"
+CSRF_TRUSTED_ORIGINS = [
+    "https://task-management-system-pj5s.onrender.com/",
+]
+CORS_ALLOWED_ORIGINS = [
+    "https://task-management-system-pj5s.onrender.com/",
+]
 
 # Application definition
 
@@ -42,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TMapp',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -50,12 +59,12 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Enable WhiteNoise for static files
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'core.urls'
 
 
@@ -154,3 +163,9 @@ EMAIL_USE_TLS = True  # Use TLS for secure connection
 EMAIL_USE_SSL = False  # Use SSL for secure connection (either TLS or SSL)
 EMAIL_HOST_USER = 'zzeeshan0503@gmail.com'  # Your email address
 EMAIL_HOST_PASSWORD = 'jffkzvestyuqmkqm'  # Your email password or app password
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"

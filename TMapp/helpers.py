@@ -4,8 +4,10 @@ from django.conf import settings
 
 
 def send_forget_password_email(email,token):
+    url = settings.URLS
+    print(url)
     subject = 'Your Forget Password Link'
-    message = f'Hi, Click on the following link to rest your password https://task-management-system-pj5s.onrender.com/change-password/{token}'
+    message = f'Hi, Click on the following link to rest your password {url}/change-password/{token}'
     mailfrom = settings.EMAIL_HOST_USER
     receipt_mail = [email]
     send_mail(subject,message,mailfrom,receipt_mail)
@@ -13,9 +15,10 @@ def send_forget_password_email(email,token):
 
 
 def send_Register_email(email, user_name,token):
-    
+    url = settings.URLS
+    print(url)
     subject = 'Thanks For Registering With Us Verify your Account'
-    message = f'Hi, {user_name} We are Very happy To see you here at our Task Managemant System. Click the link to verify your account: https://task-management-system-pj5s.onrender.com/verify/{token}'
+    message = f'Hi, {user_name} We are Very happy To see you here at our Task Managemant System. Click the link to verify your account: {url}/verify/{token}'
     mailfrom = settings.EMAIL_HOST_USER
     receipt_mail = [email]
     send_mail(subject, message, mailfrom, receipt_mail)
