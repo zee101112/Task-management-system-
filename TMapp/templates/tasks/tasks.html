@@ -57,7 +57,7 @@
                             <td>{{task.due_date}}</td>
                             <td>{{task.status}}</td>
                             <td>
-                                {% if user.is_superuser == 2 %}
+                                {% if user.is_superuser == 1 %}
                                 <button type="button" class="btn btn-primary edit-task" data-toggle="modal" name="task-id" data-target=".bd-update-modal-lg" data-task-id="{{ task.id }}">Edit</button>
                                 <button type="button" class="btn btn-primary view-task" data-toggle="modal" name="task-id" data-target=".bd-view-modal-lg" data-task-id="{{ task.id }}">View</button>
                                 <a class="btn btn-danger delete-task-button" data-toggle="modal" data-target="#confirmDeleteModal" data-task-id="{{ task.id }}">Delete</a>
