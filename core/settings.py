@@ -28,7 +28,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ["https://task-management-system-pj5s.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://task-management-system-pj5s.onrender.com/",
+                        'https://task-management-system-pj5s.onrender.com/auth/']
 
 
 # Application definition
