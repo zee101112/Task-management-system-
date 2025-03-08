@@ -1,0 +1,562 @@
+{% extends '../base.html' %}
+
+{% block title %} Users {% endblock title %}
+
+{% block users %} active {% endblock users %}
+
+{% load static %}
+
+{% block content %} 
+<div id="add"></div>
+ <section class="section">
+          <div class="section-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="m-2">Users</h4>
+                    <div class="card-header-action">
+                      <div class="input-group">
+                        <a href="" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add-New</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body ">
+                    
+                    <div class="loader"></div>
+                    <div class="table-responsive ">
+                      <table class="table table-striped" id="table-1">
+                          <thead>
+                              <tr>
+                                  <th class="text-center">
+                                      #
+                                    </th>
+                                    <th>User Name</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Profile-Photo</th>
+                                    <th>Email</th>
+                                    <th>Phone-no</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Verify</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user, status in zipped_data %}
+                                <tr>
+                            <td>
+                                {{user.id}}
+                            </td>
+                            <td>{{user.user_name}}</td>
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.last_name}}</td>
+                            
+                            <td>
+                              {% if user.image %}
+                                <img src="{{ user.image.url }}" width="60" alt="User Image">
+                              {% else %}
+                                <!-- Handle the case where no image is associated with the user -->
+                                <p>No image available</p>
+                              {% endif %}
+                            </td>
+                            <td class="align-middle">
+                                {{user.email}}
+                            </td>
+                            <td>{{user.phone_no}}</td>
+                            <td>
+                                {% if status.is_verified %}
+                                    <div class="badge badge-success badge-shadow">Verified</div>
+                                {% else %}
+                                    <div class="badge badge-danger badge-shadow">Not Verified</div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary edit-user" data-toggle="modal" name="user-id" data-target=".bd-update-modal-lg" data-user-id="{{ user.id }}">Edit</button>
+                                <button type="button" class="btn btn-primary view-user" data-toggle="modal" name="user-id" data-target=".bd-view-modal-lg" data-user-id="{{ user.id }}">View</button>
+                                <a class="btn btn-danger delete-user-button" data-toggle="modal" data-target="#confirmDeleteModal" data-user-id="{{ user.id }}">Delete</a>
+                            </td>
+                            <td>
+                             <a class="btn btn-primary verify-user-button " data-toggle="modal" data-target="#confirmVerifyModal" data-user-id="{{ user.id }}">verify</a>
+                          </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% comment %} modal to add users {% endcomment %}
+<div>       
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" id="myForm">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myLargeModalLabel">Add-user-Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="first_name">First Name</label>
+              <input id="first_name" type="text" class="form-control" name="first_name"  >
+            </div>
+            <div class="form-group col-6">
+              <label for="last_name">Last Name</label>
+              <input id="last_name" type="text" class="form-control" name="last_name" >
+            </div>
+          </div>
+          <div class="row">
+              <div class="form-group col-6">
+                <label for="email">Email</label>
+                <input id="email" type="email" class="form-control" name="email" required="" >
+                <div class="invalid-feedback">
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label for="file">Profile Photo</label>
+                <input type="file" name="image" class="form-control">
+              </div>  
+            </div>
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="phoneno" class="d-block">Phone-No</label>
+              <input id="phoneno" type="text" class="form-control" name="phoneno" >
+            </div>
+            <div class="form-group col-6">
+              <label for="username">UserName</label>
+              <input id="username" type="text" class="form-control" name="username" required="" >
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="password" class="d-block">Password</label>
+              <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator"
+                name="password">
+              <div id="pwindicator" class="pwindicator">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+            </div>
+            <div class="form-group col-6">
+              <label for="password2" class="d-block">Password Confirmation</label>
+              <input id="password2" type="password" class="form-control" name="password2">
+            </div>
+          </div>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+              <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+</div>
+
+{% comment %} modal to edit users {% endcomment %}
+<div>       
+    <div class="modal fade bd-update-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true" id="myForm">             
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myLargeModalLabel">Update-user-Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" id="editForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="first_name">First Name</label>
+                    <input id="first_name" type="text" class="form-control" name="first_name" >
+                </div>
+                <div class="form-group col-6">
+                    <label for="last_name">Last Name</label>
+                    <input id="last_name" type="text" class="form-control" name="last_name" >
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" class="form-control" name="email" >
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="form-group col-6">
+                    <label for="image">Profile Photo</label>
+                    <input type="file" name="image" class="form-control">
+                    {% comment %} <img name="profile_photo" src="" alt="Profile Photo" width="100"> {% endcomment %}
+                </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="phoneno" class="d-block">Phone-No</label>
+                <input id="phoneno" type="text" class="form-control" name="phoneno" >
+              </div>
+              <div class="form-group col-6">
+                <label for="username">UserName</label>
+                <input id="username" type="text" class="form-control" name="username">
+              </div>
+            </div>
+            {% comment %} <div class="row">
+              <div class="form-group col-6">
+                <label for="password" class="d-block">Password</label>
+                <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator"
+                  name="password">
+                <div id="pwindicator" class="pwindicator">
+                  <div class="bar"></div>
+                  <div class="label"></div>
+                </div>
+              </div>
+              <div class="form-group col-6">
+                <label for="password2" class="d-block">Password Confirmation</label>
+                <input id="password2" type="password" class="form-control" name="password2">
+              </div>
+            </div> {% endcomment %}
+            <div class="row">
+                <div class="form-group col-6">
+                    <input id="user_id" type="hidden" class="form-control" name="user_id">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+                <button type="button" class="btn btn-secondary m-t-15" data-dismiss="modal">Cancel</button>
+            </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} readonly view {% endcomment %}
+<div>       
+  <div class="modal fade bd-view-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true" id="myForm">             
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myLargeModalLabel">View-user-Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" id="viewForm" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+              <div class="form-group col-6">
+                  <label for="first_name">First Name</label>
+                  <input id="first_name" type="text" class="form-control" name="first_name" disabled >
+              </div>
+              <div class="form-group col-6">
+                  <label for="last_name">Last Name</label>
+                  <input id="last_name" type="text" class="form-control" name="last_name" disabled>
+              </div>
+          </div>
+          <div class="row">
+              <div class="form-group col-6">
+                  <label for="email">Email</label>
+                  <input id="email" type="email" class="form-control" name="email" disabled>
+                  <div class="invalid-feedback"></div>
+              </div>
+              <div class="form-group col-6">
+                  <label for="image">Profile Photo</label>
+                  {% comment %} <input type="file" name="image" class="form-control"> {% endcomment %}
+                  <img name="profile_photo" src="" alt="Profile Photo" width="100">
+              </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="phoneno" class="d-block">Phone-No</label>
+              <input id="phoneno" type="text" class="form-control" name="phoneno" disabled>
+            </div>
+            <div class="form-group col-6">
+              <label for="username">UserName</label>
+              <input id="username" type="text" class="form-control" name="username"disabled>
+            </div>
+          </div>
+          {% comment %} <div class="row">
+            <div class="form-group col-6">
+              <label for="password" class="d-block">Password</label>
+              <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator"
+                name="password">
+              <div id="pwindicator" class="pwindicator">
+                <div class="bar"></div>
+                <div class="label"></div>
+              </div>
+            </div>
+            <div class="form-group col-6">
+              <label for="password2" class="d-block">Password Confirmation</label>
+              <input id="password2" type="password" class="form-control" name="password2">
+            </div>
+          </div> {% endcomment %}
+          <div class="row">
+              <div class="form-group col-6">
+                  <input id="user_id" type="hidden" class="form-control" name="user_id">
+              </div>
+          </div>
+          <div class="form-group">
+              <button type="button" class="btn btn-secondary m-t-15 waves-effect" data-dismiss="modal">Close</button>
+          </div>
+      </form>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+    <!-- Confirmation modal -->
+<div>
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this user?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% comment %} verify user Account {% endcomment %}
+<div>
+  <div class="modal fade" id="confirmVerifyModal" tabindex="-1" role="dialog" aria-labelledby="confirmVerifyModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="confirmVerifyModalLabel">Confirm Account Verification</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Are you sure you want to Verify this User Account?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" id="confirmVerifyButton">Verify</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $('.edit-user').click(function () {
+            
+            var userId = $(this).data('user-id');  // Get the user ID from the data attribute
+            console.log(userId);
+          
+            var url = "{% url 'get_user_data' 0 %}".replace('0', userId);
+    
+            // AJAX request to fetch user data  
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (data) {
+                    // Populate the edit form modal with the user data
+                    $('#editForm input[name="username"]').val(data.username);
+                    $('#editForm input[name="first_name"]').val(data.first_name);
+                    $('#editForm input[name="last_name"]').val(data.last_name);
+                    $('#editForm input[name="email"]').val(data.email);
+                    
+                    $('#editForm input[name="phoneno"]').val(data.phone_no);
+                    $('#editForm input[name="user_id"]').val(userId);
+                    $('#editForm input[name="password"]').val(password);
+                    $('#editForm input[name="password2"]').val(password);
+                    if (data.image_url) {
+                      $('#editForm .form-group.col-6 img[name="profile_photo"]').attr('src', data.image_url);
+                  }
+                  else{
+
+                    $('#editForm input[name="image"]').val(data.image_url);
+                  }
+   
+    
+                    // Show the edit form modal
+                    $('.bd-update-modal-lg').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors if needed
+                }
+            });
+        });
+    });
+    
+</script>
+<script>
+  $(document).ready(function () {
+      $('.view-user').click(function () {
+          
+          var userId = $(this).data('user-id');  // Get the user ID from the data attribute
+          console.log(userId);
+        
+          var url = "{% url 'get_user_data' 0 %}".replace('0', userId);
+  
+          // AJAX request to fetch user data  
+          $.ajax({
+              type: 'GET',
+              url: url,
+              success: function (data) {
+                  // Populate the view form modal with the user data
+                  $('#viewForm input[name="username"]').val(data.username);
+                  $('#viewForm input[name="first_name"]').val(data.first_name);
+                  $('#viewForm input[name="last_name"]').val(data.last_name);
+                  $('#viewForm input[name="email"]').val(data.email);
+                  $('#viewForm input[name="phoneno"]').val(data.phone_no);
+                  $('#viewForm input[name="user_id"]').val(userId);
+                  $('#viewForm input[name="password"]').val(password);
+                  $('#viewForm input[name="password2"]').val(password);
+                  if (data.image_url) {
+                    $('#viewForm .form-group.col-6 img[name="profile_photo"]').attr('src', data.image_url);
+                }
+                else{
+
+                  $('#vieworm input[name="image"]').val(data.image_url);
+                }
+ 
+  
+                  // Show the edit form modal
+                  $('.bd-view-modal-lg').modal('show');
+              },
+              error: function (xhr, status, error) {
+                  // Handle errors if needed
+              }
+          });
+      });
+  });
+  
+</script>
+<script>
+    var csrfToken = "{{ csrf_token }}";
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Store the user ID when the "Delete" button is clicked
+        var userIdToDelete;
+    
+        // Handle the "Delete" button click event
+        $('.delete-user-button').click(function () {
+            userIdToDelete = $(this).data('user-id');
+        });
+    
+        // Handle the "Delete" confirmation button click event
+        $('#confirmDeleteButton').click(function () {
+            if (userIdToDelete) {
+                var url = "{% url 'delete_user' %}";
+    
+                // AJAX POST request to delete the user
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { user_id: userIdToDelete },
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    },
+                    success: function (data) {
+                        
+                        $('#confirmDeleteModal').modal('hide');
+                        var add = $('#add');
+
+                        // Check if the response contains a success message
+                        if (data.success) {
+                            // Set the alert content for success
+                            add.html('<div class="alert alert-warning alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' + data.message + '</div></div>');
+                        } else {
+                            // Set the alert content for error
+                            add.html('<div class="alert alert-danger alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>Error: ' + data.message + '</div></div>');
+                        }
+                        // Refresh the table
+                        setTimeout(function () {
+                          window.location.href = "{% url 'users' %}";
+                      }, 700);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors if needed
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <script>
+      $(document).ready(function () {
+          // Store the user ID when the "verify" button is clicked
+          var userIdToVerify;
+      
+          // Handle the "verify" button click event
+          $('.verify-user-button').click(function () {
+            userIdToVerify = $(this).data('user-id');
+          });
+      
+          // Handle the "verify" confirmation button click event
+          $('#confirmVerifyButton').click(function () {
+              if (userIdToVerify) {
+                
+                  var url = "{% url 'verify_user' %}";
+      
+                  // AJAX POST request to verify the user
+                  $.ajax({
+                      type: 'POST',
+                      url: url,
+                      data: { user_id: userIdToVerify },
+                      headers: {
+                          'X-CSRFToken': csrfToken
+                      },
+                      success: function (data) {
+                          
+                          $('#confirmVerifyModal').modal('hide');
+                          var add = $('#add');
+  
+                          // Check if the response contains a success message
+                          if (data.success) {
+                              // Set the alert content for success
+                              add.html('<div class="alert alert-warning alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' + data.message + '</div></div>');
+                          } else {
+                              // Set the alert content for error
+                              add.html('<div class="alert alert-danger alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>Error: ' + data.message + '</div></div>');
+                          }
+                          // Refresh the table
+                          setTimeout(function () {
+                            window.location.href = "{% url 'users' %}";
+                        }, 700);
+                      },
+                      error: function (xhr, status, error) {
+                          // Handle errors if needed
+                      }
+                  });
+              }
+          });
+      });
+      </script>
+{% endblock scripts %}

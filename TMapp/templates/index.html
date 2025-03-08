@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+  <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">TaskManager</h1>
+            <div class="nav-links">
+                <a href="{% url 'login_user' %}"><button class="btn-outline">Login</button></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h2>Manage Tasks Like a Pro</h2>
+            <p>Boost productivity with an intuitive task management system. Track progress, set priorities, and collaborate effortlessly.</p>
+            <a href="{% url 'register_user' %}"><button class="btn">Get Started</button></a>
+
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="feature-card">
+                <img src="{% static 'assets/img/task.png' %}" alt="Task Management">
+                <h3>Task Management</h3>
+                <p>Create, update, and delete tasks easily.</p>
+            </div>
+
+            <div class="feature-card">
+                <img src="{% static 'assets/img/tracker.png' %}" alt="Track Progress">
+                <h3>Track Progress</h3>
+                <p>Set due dates, priorities, and statuses.</p>
+            </div>
+
+            <div class="feature-card">
+                <img src="{% static 'assets/img/access.png' %}" alt="Role-based Access">
+                <h3>Role-based Access</h3>
+                <p>Admins manage tasks, users can add and view.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 TaskManager. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
