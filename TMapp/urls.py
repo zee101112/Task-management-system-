@@ -23,12 +23,12 @@ urlpatterns = [
 
     path('projects/', views.Projects, name='projects'),
     path('get_project_data/<int:project_id>/', views.get_project_data, name='get_project_data'),
-    path('delete_project/', views.delete_project, name='delete_project'),
+    path('delete_project/<int:project_id>/', views.delete_project, name='delete_project'),
     
     
     path('tasks/', views.Tasks, name='tasks'),
     path('get_task_data/<int:task_id>/', views.get_task_data, name='get_task_data'),
-    path('delete_task/', views.delete_project, name='delete_task'),
+    path('delete_task/<int:project_id>/', views.delete_project, name='delete_task'),
 
     path('profile/', views.profile_setting, name='profile'),
 
